@@ -12,7 +12,11 @@ def extra_content(html):
   title = re.search(
       r'<div class="nr_title" id="nr_title">(.*?)</div>', html, re.S)
   content = re.search(r'<div id="nr1">(.*?)</div>', html, re.S)
-  return title.group(1).strip(), clean_up_tags(content.group(1).strip())
+  result = {
+      'title' : title.group(1).strip(),
+      'content': clean_up_tags(content.group(1).strip())
+  }
+  return result
 
 
 def clean_up_tags(html_content):
