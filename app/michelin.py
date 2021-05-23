@@ -34,11 +34,12 @@ def main():
       soup = BeautifulSoup(html_content, "lxml")
       info = soup.find("div", attrs={"class": "restaurant-details__heading d-none d-lg-block"})
       address = info.find("li").text.strip()
-
-      result.append([restaurant_name, restaurant_link, restaurant_type, address, "page - " + str(x)])
+      price = info.find("li", attrs={'class': 'restaurant-details__heading-price'}).text.replace(" ", '').replace("\n", "")
+      result.append([restaurant_name, restaurant_link, restaurant_type, address, "page - " + str(x), price])
 
   print(result)
   df = pd.DataFrame(result)
+  df.columns = ['店名','链接','类型','地址', '页码', '人均']
   df.to_csv('restaurants.csv')
 
 if __name__ == '__main__' :
